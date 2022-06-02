@@ -1,0 +1,533 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ */
+package gym_management_system;
+
+import java.sql.Connection;
+import javax.swing.table.DefaultTableModel;
+import java.sql.*;
+import javax.swing.JOptionPane;
+import javax.swing.table.TableModel;
+/**
+ *
+ * @author Prathamesh Saraf */
+public class ManageCoaches extends javax.swing.JFrame {
+
+    
+    Connection con=null;
+    ResultSet rs=null;
+    PreparedStatement ps=null;
+    /**
+     * Creates new form ManageClients
+     */
+    
+    String coachName, mobile;
+    int coachId, no_of_clients;
+    DefaultTableModel model; 
+    
+    public ManageCoaches() {
+        initComponents();
+        con=DBconnection.getconnection();
+        setCoachDetails();
+    }
+    
+    public void setCoachDetails(){
+        try 
+        {
+            
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("SELECT * FROM `coach_details`");
+            
+            while(rs.next())
+            {
+                String coachId = rs.getString("coach_id");
+                String coachName = rs.getString("coach_name");
+                String Mobile = rs.getString("mobile_no");
+                int ClientsNumber = rs.getInt("no_of_clients");
+                
+                Object[] obj = {coachId, coachName, Mobile, ClientsNumber};
+                model = (DefaultTableModel)CoachTable.getModel();
+                model.addRow(obj);
+                
+            }
+        } 
+        catch (Exception e) 
+        {
+            e.printStackTrace();
+        }
+    }
+    
+    public boolean addcoach()
+    {
+        boolean isAdded = false;
+        coachId = Integer.parseInt(CoachID.getText());
+        coachName = CName.getText();
+        mobile = CMobile.getText();
+        no_of_clients = Integer.parseInt(CNo_Of_Clients.getText());
+        
+        try 
+        {
+          
+            String sql = "INSERT INTO `coach_details`(`coach_id`, `coach_name`, `mobile_no`, `no_of_clients`) VALUES(?,?,?,?)";
+            PreparedStatement pst = con.prepareStatement(sql);
+            
+            pst.setInt(1, coachId);
+            pst.setString(2, coachName);
+            pst.setString(3, mobile);
+            pst.setInt(4, no_of_clients);
+            
+            int rowCount = pst.executeUpdate();
+            if(rowCount>0)
+            {
+                isAdded = true;
+            }
+            else
+            {
+                isAdded = false;
+            }
+        } 
+        catch (Exception e) 
+        {
+            e.printStackTrace();
+        }
+        return isAdded;
+    }
+    
+    public boolean updatecoach()
+    {
+        boolean isUpdated = false;
+        coachId = Integer.parseInt(CoachID.getText());
+        coachName = CName.getText();
+        mobile = CMobile.getText();
+        no_of_clients = Integer.parseInt(CNo_Of_Clients.getText()); 
+        
+        try 
+        {
+            
+            String sql = "UPDATE `coach_details` SET `coach_id`=?,`coach_name`=?,`mobile_no`=?,`no_of_clients`=? WHERE `coach_id`=?";
+            PreparedStatement pst = con.prepareStatement(sql);
+             pst.setInt(1, coachId);
+            pst.setString(2, coachName);
+            pst.setString(3, mobile);
+            pst.setInt(4, no_of_clients);
+            pst.setInt(5, coachId);
+            
+            int rowCount = pst.executeUpdate();
+            if (rowCount>0)
+            {
+               isUpdated = true;
+            }
+            else
+            {
+                isUpdated = false;
+            }
+        } 
+        catch (Exception e) 
+        {
+            e.printStackTrace();
+        }
+        return isUpdated;
+    }
+    
+    public boolean deleteCoach()
+    {
+        boolean isDeleted = false;
+        coachId = Integer.parseInt(CoachID.getText());
+        
+        try 
+        {
+            String sql = "DELETE FROM `coach_details` WHERE `coach_id`=?";
+            PreparedStatement pst = con.prepareStatement(sql);
+            pst.setInt(1, coachId);
+            
+            int rowCount = pst.executeUpdate();
+            if(rowCount>0)
+            {
+                isDeleted = true;
+            }
+            else
+            {
+                isDeleted = false;
+            }
+        } 
+        catch (Exception e) 
+        {
+            e.printStackTrace();
+        }
+        return isDeleted;
+    }
+    
+    public void clearTable()
+    {
+        DefaultTableModel model = (DefaultTableModel) CoachTable.getModel();
+        model.setRowCount(0);
+    }
+    
+            
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        jPanel1 = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        CName = new javax.swing.JTextField();
+        CMobile = new javax.swing.JTextField();
+        CNo_Of_Clients = new javax.swing.JTextField();
+        CoachID = new javax.swing.JTextField();
+        jTextField5 = new javax.swing.JTextField();
+        CDeleteBtn = new javax.swing.JButton();
+        CUpdateBtn = new javax.swing.JButton();
+        CAddBtn = new javax.swing.JButton();
+        CBackBtn = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        CoachTable = new javax.swing.JTable();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel2.setBackground(new java.awt.Color(102, 102, 255));
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel10.setText("Coach Id:");
+        jPanel2.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 120, 130, -1));
+
+        jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gym_management_system/icons/icons/icons8_Account_50px.png"))); // NOI18N
+        jPanel2.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 160, 50, 50));
+
+        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gym_management_system/icons/icons/icons8_Account_50px.png"))); // NOI18N
+        jPanel2.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 310, 50, 50));
+
+        jLabel13.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel13.setText("Name:");
+        jPanel2.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 270, 130, -1));
+
+        jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gym_management_system/icons/icons/icons8_Account_50px.png"))); // NOI18N
+        jPanel2.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 450, 50, 50));
+
+        jLabel15.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel15.setText("Mobile:");
+        jPanel2.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 410, 130, -1));
+
+        jLabel16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gym_management_system/icons/icons/icons8_Account_50px.png"))); // NOI18N
+        jPanel2.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 590, 50, 50));
+
+        jLabel17.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel17.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel17.setText("No. of Clients:");
+        jPanel2.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 550, 130, -1));
+
+        CName.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        CName.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(153, 153, 153)));
+        jPanel2.add(CName, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 300, 370, 50));
+
+        CMobile.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        CMobile.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(153, 153, 153)));
+        jPanel2.add(CMobile, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 440, 370, 50));
+
+        CNo_Of_Clients.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        CNo_Of_Clients.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(153, 153, 153)));
+        jPanel2.add(CNo_Of_Clients, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 580, 370, 50));
+
+        CoachID.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        CoachID.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(153, 153, 153)));
+        jPanel2.add(CoachID, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 150, 370, 50));
+
+        jTextField5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jTextField5.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(153, 153, 153)));
+        jPanel2.add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 150, 370, 50));
+
+        CDeleteBtn.setBackground(new java.awt.Color(255, 0, 0));
+        CDeleteBtn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        CDeleteBtn.setForeground(new java.awt.Color(255, 255, 255));
+        CDeleteBtn.setText("Delete");
+        CDeleteBtn.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(153, 153, 153)));
+        CDeleteBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CDeleteBtnActionPerformed(evt);
+            }
+        });
+        jPanel2.add(CDeleteBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 740, 90, 30));
+
+        CUpdateBtn.setBackground(new java.awt.Color(0, 0, 204));
+        CUpdateBtn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        CUpdateBtn.setForeground(new java.awt.Color(255, 255, 255));
+        CUpdateBtn.setText("Update");
+        CUpdateBtn.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(153, 153, 153)));
+        CUpdateBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CUpdateBtnActionPerformed(evt);
+            }
+        });
+        jPanel2.add(CUpdateBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 740, 90, 30));
+
+        CAddBtn.setBackground(new java.awt.Color(0, 204, 0));
+        CAddBtn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        CAddBtn.setForeground(new java.awt.Color(255, 255, 255));
+        CAddBtn.setText("ADD");
+        CAddBtn.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(153, 153, 153)));
+        CAddBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CAddBtnActionPerformed(evt);
+            }
+        });
+        jPanel2.add(CAddBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 740, 90, 30));
+
+        CBackBtn.setBackground(new java.awt.Color(255, 0, 0));
+        CBackBtn.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        CBackBtn.setForeground(new java.awt.Color(255, 255, 255));
+        CBackBtn.setText("Back");
+        CBackBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        CBackBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CBackBtnActionPerformed(evt);
+            }
+        });
+        jPanel2.add(CBackBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 110, 30));
+
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 580, 830));
+
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 0, 153));
+        jLabel1.setText("Manage Coaches");
+        jPanel3.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(335, 150, 330, 50));
+
+        jPanel4.setBackground(new java.awt.Color(255, 0, 204));
+        jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel3.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 200, 300, 5));
+
+        jLabel2.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 0, 0));
+        jLabel2.setText("X");
+        jLabel2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel2MouseClicked(evt);
+            }
+        });
+        jPanel3.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 10, 20, -1));
+
+        jScrollPane1.setBackground(new java.awt.Color(255, 153, 255));
+        jScrollPane1.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(153, 153, 153)));
+
+        CoachTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ID", "Name", "Mobile", "Gender"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        CoachTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                CoachTableMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(CoachTable);
+
+        jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(162, 230, 620, 170));
+
+        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 0, 960, 820));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1724, 824));
+        jPanel1.getAccessibleContext().setAccessibleName("");
+
+        setSize(new java.awt.Dimension(1543, 824));
+        setLocationRelativeTo(null);
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void rSMaterialButtonRectangle1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSMaterialButtonRectangle1ActionPerformed
+        
+    }//GEN-LAST:event_rSMaterialButtonRectangle1ActionPerformed
+
+    private void rSMaterialButtonRectangle2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSMaterialButtonRectangle2ActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_rSMaterialButtonRectangle2ActionPerformed
+
+    private void tbl_coachDetailsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_coachDetailsMouseClicked
+       
+    }//GEN-LAST:event_tbl_coachDetailsMouseClicked
+
+    private void rSMaterialButtonCircle2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSMaterialButtonCircle2ActionPerformed
+        
+    }//GEN-LAST:event_rSMaterialButtonCircle2ActionPerformed
+
+    private void rSMaterialButtonCircle3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rSMaterialButtonCircle3MouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rSMaterialButtonCircle3MouseEntered
+
+    private void rSMaterialButtonCircle3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rSMaterialButtonCircle3MouseClicked
+        
+    }//GEN-LAST:event_rSMaterialButtonCircle3MouseClicked
+
+    private void rSMaterialButtonCircle1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSMaterialButtonCircle1ActionPerformed
+        
+    }//GEN-LAST:event_rSMaterialButtonCircle1ActionPerformed
+
+    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
+        // TODO add your handling code here:
+        dispose();
+    }//GEN-LAST:event_jLabel2MouseClicked
+
+    private void CBackBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CBackBtnActionPerformed
+        // TODO add your handling code here:
+
+       HomePage hm = new HomePage();
+        hm.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_CBackBtnActionPerformed
+
+    private void CoachTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CoachTableMouseClicked
+        // TODO add your handling code here:
+         int rowNo = CoachTable.getSelectedRow();
+        TableModel model = CoachTable.getModel();
+        
+        CoachID.setText(model.getValueAt(rowNo, 0).toString());
+        CName.setText(model.getValueAt(rowNo, 1).toString());
+        CMobile.setText(model.getValueAt(rowNo, 2).toString());
+        CNo_Of_Clients.setText(model.getValueAt(rowNo, 3).toString());
+    }//GEN-LAST:event_CoachTableMouseClicked
+
+    private void CAddBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CAddBtnActionPerformed
+        // TODO add your handling code here:
+        if(addcoach()==true)
+        {
+            JOptionPane.showMessageDialog(this, "Coach has Added");
+            clearTable();
+            setCoachDetails();
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(this, "Coach has not Added");
+        }
+    }//GEN-LAST:event_CAddBtnActionPerformed
+
+    private void CUpdateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CUpdateBtnActionPerformed
+        // TODO add your handling code here:
+        if(updatecoach()==true)
+        {
+            JOptionPane.showMessageDialog(this, "Updated Successfully");
+            clearTable();
+            setCoachDetails();
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(this, "Try Again");
+        }
+    }//GEN-LAST:event_CUpdateBtnActionPerformed
+
+    private void CDeleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CDeleteBtnActionPerformed
+        // TODO add your handling code here:
+        if(deleteCoach()==true)
+        {
+            JOptionPane.showMessageDialog(this, "Deleted Successfully");
+            clearTable();
+            setCoachDetails();
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(this, "Try Again");
+        }
+    }//GEN-LAST:event_CDeleteBtnActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(ManageCoaches.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(ManageCoaches.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(ManageCoaches.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(ManageCoaches.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new ManageCoaches().setVisible(true);
+            }
+        });
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton CAddBtn;
+    private javax.swing.JButton CBackBtn;
+    private javax.swing.JButton CDeleteBtn;
+    private javax.swing.JTextField CMobile;
+    private javax.swing.JTextField CName;
+    private javax.swing.JTextField CNo_Of_Clients;
+    private javax.swing.JButton CUpdateBtn;
+    private javax.swing.JTextField CoachID;
+    private javax.swing.JTable CoachTable;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField jTextField5;
+    // End of variables declaration//GEN-END:variables
+}
