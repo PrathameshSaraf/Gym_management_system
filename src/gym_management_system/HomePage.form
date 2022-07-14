@@ -683,11 +683,59 @@
         <Component class="javax.swing.JTable" name="ClientTable">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="4" rowCount="0">
-                <Column editable="false" title="ID" type="java.lang.Object"/>
-                <Column editable="false" title="Name" type="java.lang.Object"/>
-                <Column editable="false" title="Mobile" type="java.lang.Object"/>
-                <Column editable="false" title="Gender" type="java.lang.Object"/>
+              <Table columnCount="4" rowCount="11">
+                <Column editable="false" title="ID" type="java.lang.Object">
+                  <Data value="1"/>
+                  <Data value="2"/>
+                  <Data value="3"/>
+                  <Data value="4"/>
+                  <Data value="5"/>
+                  <Data value="6"/>
+                  <Data value="7"/>
+                  <Data value="8"/>
+                  <Data value="9"/>
+                  <Data value="null"/>
+                  <Data value="null"/>
+                </Column>
+                <Column editable="false" title="Name" type="java.lang.Object">
+                  <Data value="Prathamesh"/>
+                  <Data value="Mandar"/>
+                  <Data value="Suraj"/>
+                  <Data value="Mohish"/>
+                  <Data value="Ajinkya"/>
+                  <Data value="Aditya"/>
+                  <Data value="Utkarsh"/>
+                  <Data value="Yash"/>
+                  <Data value="Paras"/>
+                  <Data value="null"/>
+                  <Data value="null"/>
+                </Column>
+                <Column editable="false" title="Mobile" type="java.lang.Object">
+                  <Data value="8624975041"/>
+                  <Data value="9875421364"/>
+                  <Data value="7458962143"/>
+                  <Data value="7896541230"/>
+                  <Data value="4789512547"/>
+                  <Data value="9856041237"/>
+                  <Data value="9632587410"/>
+                  <Data value="9514782360"/>
+                  <Data value="9713546280"/>
+                  <Data value="null"/>
+                  <Data value="null"/>
+                </Column>
+                <Column editable="false" title="Gender" type="java.lang.Object">
+                  <Data value="Male"/>
+                  <Data value="Male"/>
+                  <Data value="Male"/>
+                  <Data value="Male"/>
+                  <Data value="Male"/>
+                  <Data value="Male"/>
+                  <Data value="Male"/>
+                  <Data value="Male"/>
+                  <Data value="Male"/>
+                  <Data value="null"/>
+                  <Data value="null"/>
+                </Column>
               </Table>
             </Property>
           </Properties>

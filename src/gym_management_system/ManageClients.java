@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package gym_management_system;
 
 import java.sql.Connection;
@@ -10,15 +7,10 @@ import javax.swing.table.DefaultTableModel;
 import java.sql.*;
 import javax.swing.JOptionPane;
 import javax.swing.table.TableModel;
-/**
- *
- * @author Rushabh Warke
- */
+
 public class ManageClients extends javax.swing.JFrame {
 
-    /**
-     * Creates new form ManageClients
-     */
+    
     Connection con=null;
     ResultSet rs=null;
     PreparedStatement ps=null;

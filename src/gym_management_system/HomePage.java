@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package gym_management_system;
 
 import java.awt.Color;
@@ -444,7 +441,17 @@ public class HomePage extends javax.swing.JFrame {
 
         ClientTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-
+                {"1", "Prathamesh", "8624975041", "Male"},
+                {"2", "Mandar", "9875421364", "Male"},
+                {"3", "Suraj", "7458962143", "Male"},
+                {"4", "Mohish", "7896541230", "Male"},
+                {"5", "Ajinkya", "4789512547", "Male"},
+                {"6", "Aditya", "9856041237", "Male"},
+                {"7", "Utkarsh", "9632587410", "Male"},
+                {"8", "Yash", "9514782360", "Male"},
+                {"9", "Paras", "9713546280", "Male"},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
                 "ID", "Name", "Mobile", "Gender"
